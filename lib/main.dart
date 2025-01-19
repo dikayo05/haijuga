@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 
+// firebase
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 // page
 import 'pages/home_page.dart';
 
-void main() {
+Future<void> main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(const MyApp());
 }
 
