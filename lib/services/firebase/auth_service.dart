@@ -1,34 +1,59 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class AuthService {
-  Future<void> signup({required String email, required String password}) async {
+  // register
+  Future<UserCredential?> register(
+      {required String email,
+      required String password,
+      required BuildContext context}) async {
+    String errorMessage = 'error, try again';
+
     try {
-      final credential =
+      final userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      return userCredential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        errorMessage = 'The password provided is too weak.';
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        errorMessage = 'The account already exists for that email.';
       }
     } catch (e) {
-      print(e);
+      errorMessage = e.toString();
     }
+
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(errorMessage)));
+
+    return null;
   }
 
-  Future<void> signin({required String email, required String password}) async {
+  // login
+  Future<UserCredential?> login(
+      {required String email,
+      required String password,
+      required BuildContext context}) async {
+    String errorMessage = 'error, try again';
+
     try {
-      final credential = await FirebaseAuth.instance
+      final userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+      return userCredential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        errorMessage = 'No user found for that email.';
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        errorMessage = 'Wrong password provided for that user.';
       }
     }
+
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(errorMessage)));
+
+    return null;
   }
 }
