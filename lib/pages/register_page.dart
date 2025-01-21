@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:haijuga/services/firebase/auth_service.dart';
 
 // page
-import 'home_page.dart';
+import 'main_page.dart';
 import 'login_page.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -41,6 +41,7 @@ class _RegisterPageState extends State<RegisterPage> {
               controller: _emailController,
             ),
             TextField(
+              obscureText: true,
               controller: _passwordController,
             ),
             ElevatedButton(
@@ -52,10 +53,11 @@ class _RegisterPageState extends State<RegisterPage> {
                           password: _passwordController.text,
                           context: context);
 
-                  // move to home page if has have credential
+                  // if has credential, save credential and move to home page
                   if (userCredential != null) {
+                    _authService.saveUserCredential(userCredential);
                     Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => const HomePage()),
+                      MaterialPageRoute(builder: (context) => const MainPage()),
                     );
                   }
                 },

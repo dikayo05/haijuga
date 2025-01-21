@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
+import 'package:haijuga/pages/views/profile_view.dart';
+
 // widget
 import 'package:haijuga/widgets/navbar_widget.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class MainPage extends StatefulWidget {
+  const MainPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<MainPage> createState() => _MainPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -22,7 +24,7 @@ class _HomePageState extends State<HomePage> {
           body: const TabBarView(children: [
             Text('home'),
             Text('message'),
-            Text('profile'),
+            ProfileView(),
           ]),
           bottomNavigationBar: navbarWidget(),
         ));
