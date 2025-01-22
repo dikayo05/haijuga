@@ -38,9 +38,15 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           children: [
             TextField(
+              decoration: const InputDecoration(
+                hintText: 'Email',
+              ),
               controller: _emailController,
             ),
             TextField(
+              decoration: const InputDecoration(
+                hintText: 'Password',
+              ),
               obscureText: true,
               controller: _passwordController,
             ),

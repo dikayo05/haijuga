@@ -38,9 +38,11 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Column(
           children: [
             TextField(
+              decoration: InputDecoration(hintText: 'Email'),
               controller: _emailController,
             ),
             TextField(
+              decoration: const InputDecoration(hintText: 'Password'),
               obscureText: true,
               controller: _passwordController,
             ),
