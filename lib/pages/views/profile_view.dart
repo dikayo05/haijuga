@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:haijuga/services/firebase/auth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -16,6 +17,7 @@ class _ProfileViewState extends State<ProfileView> {
     return Column(
       children: [
         const Text('Profile'),
+        Text(FirebaseAuth.instance.currentUser!.email!),
         ElevatedButton(
           onPressed: () {
             showDialog(
