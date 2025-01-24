@@ -1,6 +1,13 @@
 # haijuga
 
-A new Flutter project.
+social media app
+aplikasi dimana orang tidak perlu khawatir tentang identitas diri, karena di aplikasi ini kita bisa menjadi siapa saja dengan identitas buatan
+
+# How To Use App
+ada beberapa ras (manusia, elf, dark elf, kurcaci, troll, manusia setengah binatang, dan lain-lain)
+- buat nama samaran
+- pilih ras yang diinginkan, lalu kamu bisa bersosialisasi dengan orang menggunakan identitas buatan ini (tanpa data pribadi kamu)
+- kamu juga bisa membuat backstory tentang karakter kamu sendiri
 
 ## Getting Started
 
