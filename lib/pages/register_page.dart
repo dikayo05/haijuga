@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 // firebase
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:haijuga/services/firebase/auth_service.dart';
+import 'package:haijuga/services/firebase/firestore_service.dart';
+
+import 'package:haijuga/models/user_model.dart';
 
 // page
 import 'main_page.dart';
@@ -16,12 +19,16 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final _authService = AuthService();
+  final AuthService _authService = AuthService();
+  final FirestoreService _firestoreService = FirestoreService();
+
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   @override
   void dispose() {
+    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
 
@@ -37,10 +44,19 @@ class _RegisterPageState extends State<RegisterPage> {
       body: Center(
         child: Column(
           children: [
+            // name input
+            TextField(
+              decoration: InputDecoration(hintText: 'Name'),
+              controller: _nameController,
+            ),
+
+            // email input
             TextField(
               decoration: InputDecoration(hintText: 'Email'),
               controller: _emailController,
             ),
+
+            // password input
             TextField(
               decoration: const InputDecoration(hintText: 'Password'),
               obscureText: true,
@@ -57,7 +73,24 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   // if has credential, save credential and move to home page
                   if (userCredential != null) {
-                    _authService.saveUserCredential(userCredential);
+                    try {
+                      _authService.saveUserCredential(userCredential);
+                    } catch (e) {
+                      // Handle the exception, e.g., show a snackbar or log the error
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content:
+                                Text('Failed to save user credentials: $e')),
+                      );
+                    }
+
+                    // save user data to firestore
+                    // final UserModel userModel = UserModel(
+                    //     name: _nameController.text,
+                    //     email: _emailController.text);
+                    // await _firestoreService.addUser(
+                    //     userCredential.user!.uid, userModel.toMap());
+
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => const MainPage()),
                     );

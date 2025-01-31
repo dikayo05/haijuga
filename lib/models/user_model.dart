@@ -1,15 +1,13 @@
 class UserModel {
-  String id;
-  String name;
-  String email;
-  String password;
+  final String? name;
+  final String? email;
 
-  UserModel({
-    required this.id,
-    required this.name,
-    required this.email,
-    required this.password,
-  });
+  UserModel({this.name, this.email});
 
-  // ...existing code...
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'email': email,
+    };
+  }
 }
