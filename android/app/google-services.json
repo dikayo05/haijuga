@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "611301557128",
+    "project_id": "haijuga-dkm",
+    "storage_bucket": "haijuga-dkm.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611301557128:android:c78ee058127e704271f03d",
+        "android_client_info": {
+          "package_name": "com.dekulmen.haijuga"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcVLcMswTHOX6FVBmTMYZkHXgjWTzWuA8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
