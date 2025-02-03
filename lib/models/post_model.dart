@@ -5,7 +5,7 @@ class PostModel {
   final int    _commentCount = 0;
   final int    _shareCount   = 0;
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       "caption":       _caption,
       "media":         _media,

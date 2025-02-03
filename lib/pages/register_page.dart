@@ -75,28 +75,32 @@ class _RegisterPageState extends State<RegisterPage> {
                   if (userCredential != null) {
                     try {
                       _authService.saveUserCredential(userCredential);
+
+                      // save user data to firestore
+                      final UserModel userModel = UserModel(
+                        name: _nameController.text,
+                        email: _emailController.text,
+                      );
+
+                      await _firestoreService.addUserModel(
+                        userCredential.user!.uid,
+                        userModel,
+                      );
+
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => const MainPage()),
+                      );
                     } catch (e) {
                       // Handle the exception, e.g., show a snackbar or log the error
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                            content:
-                                Text('Failed to save user credentials: $e')),
+                        SnackBar(content: Text('Failed to save user data: $e')),
                       );
                     }
-
-                    // save user data to firestore
-                    // final UserModel userModel = UserModel(
-                    //     name: _nameController.text,
-                    //     email: _emailController.text);
-                    // await _firestoreService.addUser(
-                    //     userCredential.user!.uid, userModel.toMap());
-
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => const MainPage()),
-                    );
                   }
                 },
                 child: const Text('Register')),
+
+            // button to login page
             TextButton(
               onPressed: () => Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) => const LoginPage())),

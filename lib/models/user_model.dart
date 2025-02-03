@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserModel {
   final String? name;
   final String? email;
@@ -8,6 +10,7 @@ class UserModel {
     return {
       'name': name,
       'email': email,
+      'created_at': FieldValue.serverTimestamp(),
     };
   }
 }
