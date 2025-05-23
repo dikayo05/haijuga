@@ -15,11 +15,15 @@ if user doesn't have an account yet, they can go to register page from here to c
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:haijuga/features/auth/presentation/components/my_button.dart';
 import 'package:haijuga/features/auth/presentation/components/my_text_field.dart';
+import 'package:haijuga/features/auth/presentation/cubits/auth_cubit.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final void Function()? togglePages;
+
+  const LoginPage({super.key, this.togglePages});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -29,6 +33,26 @@ class _LoginPageState extends State<LoginPage> {
   // text controller
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  // login button pressed
+  void login() {
+    final String email = emailController.text;
+    final String password = passwordController.text;
+
+    // auth cubit
+    final authCubit = context.read<AuthCubit>();
+
+    // ensure that the email & password fields are not empty
+    if (email.isNotEmpty && password.isNotEmpty) {
+      // login
+      authCubit.login(email, password);
+    } else {
+      // display error if some fields are empty
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please enter both email and password")),
+      );
+    }
+  }
 
   // BUILD UI
   @override
@@ -82,16 +106,31 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 25),
 
                 // login button
-                MyButton(onTap: () {}, text: "Login"),
+                MyButton(onTap: login, text: "Login"),
 
                 const SizedBox(height: 50),
 
                 // not a member? register now button
-                Text(
-                  "don't have any account? Register here",
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "don't have any account?",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: widget.togglePages,
+                      child: Text(
+                        "Register here",
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
